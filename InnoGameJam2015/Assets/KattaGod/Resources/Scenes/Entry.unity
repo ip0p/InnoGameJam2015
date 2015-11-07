@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Config: {fileID: 2044164453}
+  Fire: {fileID: 2044164457}
   GameManager: {fileID: 2044164452}
   HudScene: Hud
   Orders: {fileID: 2044164451}
@@ -217,6 +218,7 @@ GameObject:
   - 114: {fileID: 2044164452}
   - 114: {fileID: 2044164451}
   - 114: {fileID: 2044164456}
+  - 114: {fileID: 2044164457}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -308,3 +310,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Orders: {fileID: 2044164451}
+--- !u!114 &2044164457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2044164450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de9c002d84e4fb34f8cdcd2add6b3811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RequiredBurnDuration: 2

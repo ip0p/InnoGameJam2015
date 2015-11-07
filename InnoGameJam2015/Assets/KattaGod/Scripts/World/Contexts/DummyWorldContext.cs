@@ -1,5 +1,6 @@
 ﻿namespace KattaGod.World.Contexts
 {
+    using KattaGod.Fire.Contexts;
     using KattaGod.Orders.Contexts;
     using KattaGod.Recipes.Contexts;
 
@@ -21,6 +22,7 @@
                         new OrderContext() { Recipe = new RecipeContext(), RemainingDuration = 15.0f }
                     }
             };
+            this.Fire = new FireContext();
         }
 
         #endregion

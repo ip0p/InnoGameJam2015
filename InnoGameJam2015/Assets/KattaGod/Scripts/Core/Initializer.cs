@@ -6,6 +6,8 @@
 
     using KattaGod.Cookbook.Contexts;
     using KattaGod.Core.Contexts;
+    using KattaGod.Fire;
+    using KattaGod.Fire.Contexts;
     using KattaGod.Hud.Contexts;
     using KattaGod.Inventory.Contexts;
     using KattaGod.Orders;
@@ -24,6 +26,8 @@
         #region Fields
 
         public Config Config;
+
+        public FireBehaviour Fire;
 
         public GameManager GameManager;
 
@@ -51,6 +55,13 @@
                 this.Orders.OrderAdded += this.OnOrderAdded;
                 this.Orders.OrderRemoved += this.OnOrderRemoved;
                 this.Orders.OrderSelected += this.OnOrderSelected;
+            }
+
+            var fireContext = new FireContext();
+            if (this.Fire != null)
+            {
+                this.Fire.Init(fireContext);
+                this.Fire.BurnCompleted += this.OnBurnCompleted;
             }
 
             var victoryContext = new VictoryContext();
@@ -82,7 +93,7 @@
             this.gameContext.Orders.SelectOrder += this.OnSelectOrder;
 
             // Load world.
-            var worldContext = new WorldContext { Orders = this.gameContext.Orders, Victory = victoryContext };
+            var worldContext = new WorldContext { Orders = this.gameContext.Orders, Victory = victoryContext, Fire = fireContext };
             worldContext.DropItem += this.OnDropItem;
             this.AddScene(this.WorldScene, worldContext);
 
@@ -171,6 +182,14 @@
         private RecipeContext GetRecipeContext(Receipt recipe)
         {
             return this.recipes.FirstOrDefault(recipeContext => recipeContext.Id == recipe.ID);
+        }
+
+        private void OnBurnCompleted()
+        {
+            if (this.GameManager != null && this.GameManager.CurrentReceipt != null)
+            {
+                this.GameManager.AddIngredient(Ingredient.type.Fire);
+            }
         }
 
         private void OnDefeat()

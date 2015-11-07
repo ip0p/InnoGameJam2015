@@ -2,6 +2,7 @@
 {
     using System;
 
+    using KattaGod.Fire.Contexts;
     using KattaGod.Inventory.Contexts;
     using KattaGod.Orders.Contexts;
     using KattaGod.Progression.Contexts;
@@ -13,6 +14,8 @@
     public class WorldContext : Context
     {
         #region Fields
+
+        private readonly Property<FireContext> fireProperty = new Property<FireContext>();
 
         private readonly Property<OrdersContext> ordersProperty = new Property<OrdersContext>();
 
@@ -27,6 +30,18 @@
         #endregion
 
         #region Properties
+
+        public FireContext Fire
+        {
+            get
+            {
+                return this.fireProperty.Value;
+            }
+            set
+            {
+                this.fireProperty.Value = value;
+            }
+        }
 
         public OrdersContext Orders
         {
@@ -58,7 +73,6 @@
 
         public void DoDropItem(ItemContext item)
         {
-            Debug.Log("Dropped item " + item);
             this.OnDropItem(item);
         }
 
