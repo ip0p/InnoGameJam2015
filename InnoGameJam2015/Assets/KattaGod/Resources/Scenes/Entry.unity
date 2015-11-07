@@ -112,7 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 765e2f5e56d2ab244a54123f70be1b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Config: {fileID: 2044164453}
   HudScene: Hud
+  Orders: {fileID: 2044164451}
   WorldScene: World
 --- !u!4 &504338721
 Transform:
@@ -194,6 +196,95 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1987057574}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+--- !u!1 &2044164450
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2044164455}
+  - 114: {fileID: 2044164454}
+  - 114: {fileID: 2044164453}
+  - 114: {fileID: 2044164452}
+  - 114: {fileID: 2044164451}
+  m_Layer: 0
+  m_Name: Game
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2044164451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2044164450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2480f6097b55b408ce71379af1608c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2044164452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2044164450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6d9c62de1034145905ce9234f991ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  receiptText: {fileID: 0}
+  config: {fileID: 2044164453}
+--- !u!114 &2044164453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2044164450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4722a1b3a22edea44aac3a180911a1e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  receiptBook:
+  - ID: Bloody Grub
+    BaseDuration: 5
+    symbol: {fileID: 0}
+    ingredients:
+    - currenttype: 0
+    - currenttype: 1
+--- !u!114 &2044164454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2044164450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf678d42ca0bffc40a9e15fb1422451d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Config: {fileID: 2044164453}
+  DelayBetweenOrders: 10
+  GameManager: {fileID: 2044164452}
+  Orders: {fileID: 2044164451}
+  TimeTillNextOrder: 0
+--- !u!4 &2044164455
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2044164450}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}

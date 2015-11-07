@@ -27,6 +27,21 @@
             }
         }
 
+        private readonly Property<string> idProperty =
+            new Property<string>();
+
+        public string Id
+        {
+            get
+            {
+                return this.idProperty.Value;
+            }
+            set
+            {
+                this.idProperty.Value = value;
+            }
+        }
+
         public string Title
         {
             get

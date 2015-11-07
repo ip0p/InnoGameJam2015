@@ -8,6 +8,8 @@
 
         private readonly Property<string> textProperty = new Property<string>();
 
+        private readonly Property<Ingredient.type> typeProperty = new Property<Ingredient.type>();
+
         #endregion
 
         #region Properties
@@ -21,6 +23,18 @@
             set
             {
                 this.textProperty.Value = value;
+            }
+        }
+
+        public Ingredient.type Type
+        {
+            get
+            {
+                return this.typeProperty.Value;
+            }
+            set
+            {
+                this.typeProperty.Value = value;
             }
         }
 

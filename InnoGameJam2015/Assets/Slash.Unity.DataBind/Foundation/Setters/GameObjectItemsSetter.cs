@@ -93,6 +93,9 @@ namespace Slash.Unity.DataBind.Foundation.Setters
 
             // Destroy item.
             Destroy(item.GameObject);
+
+            // Remove item from collection.
+            this.items.Remove(item);
         }
 
         private GameObject InstantiateItem(Transform parent, object itemContext)

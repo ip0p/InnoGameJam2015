@@ -6,17 +6,25 @@ public class GameManager : MonoBehaviour
 {
 
     public Text receiptText;
-    Config config;
+    public Config config;
     List<Ingredient> currentIngredients;
 
 	void Start ()
     {
-        config = GameObject.Find("CONFIG").GetComponent<Config>();
-        UpdateReceiptBookText();
+	    if (config == null)
+	    {
+	        config = GameObject.Find("CONFIG").GetComponent<Config>();
+	    }
+	    UpdateReceiptBookText();
     }
 
     void UpdateReceiptBookText()
     {
+        if (receiptText == null)
+        {
+            return;
+        }
+
         receiptText.text = "";
 
         foreach (Receipt receipt in config.receiptBook)

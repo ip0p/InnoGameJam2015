@@ -10,6 +10,11 @@ public class Receipt
     [SerializeField]
     public string ID;
 
+    /// <summary>
+    ///   Basic duration this recipe requires, ie difficulty (in s).
+    /// </summary>
+    public float BaseDuration;
+
     [SerializeField]
     private Image symbol;
 
