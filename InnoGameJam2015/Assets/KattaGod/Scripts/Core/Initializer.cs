@@ -163,7 +163,9 @@
 
         private OrderContext GetOrderContext(OrdersBehaviour.Order order)
         {
-            return this.gameContext.Orders.Orders.FirstOrDefault(orderContext => orderContext.Id == order.Id);
+            return order != null
+                ? this.gameContext.Orders.Orders.FirstOrDefault(orderContext => orderContext.Id == order.Id)
+                : null;
         }
 
         private RecipeContext GetRecipeContext(Receipt recipe)
@@ -212,7 +214,7 @@
         private void OnOrderSelected(OrdersBehaviour.Order order)
         {
             // Set recipe of order to game manager.
-            this.GameManager.CurrentReceipt = order.Recipe;
+            this.GameManager.CurrentReceipt = order != null ? order.Recipe : null;
 
             var orderContext = this.GetOrderContext(order);
             if (orderContext != null)

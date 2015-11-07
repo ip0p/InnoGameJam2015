@@ -64,6 +64,7 @@
             {
                 this.Orders.OrderExpired -= this.OnOrderExpired;
                 this.Orders.OrderFulfilled -= this.OnOrderFulfilled;
+                this.Orders.OrderFailed -= this.OnOrderFailed;
             }
         }
 
@@ -73,7 +74,21 @@
             {
                 this.Orders.OrderExpired += this.OnOrderExpired;
                 this.Orders.OrderFulfilled += this.OnOrderFulfilled;
+                this.Orders.OrderFailed += this.OnOrderFailed;
             }
+        }
+
+        private void DecreaseSatisfaction()
+        {
+            // Check if loosing game.
+            if (this.Satisfaction == Satisfaction.VeryAngry)
+            {
+                this.OnDefeat();
+                return;
+            }
+
+            // Decrease satisfaction.
+            this.SetSatisfaction(this.Satisfaction - 1);
         }
 
         private void OnDefeat()
@@ -87,15 +102,12 @@
 
         private void OnOrderExpired(OrdersBehaviour.Order order)
         {
-            // Check if loosing game.
-            if (this.Satisfaction == Satisfaction.VeryAngry)
-            {
-                this.OnDefeat();
-                return;
-            }
+            this.DecreaseSatisfaction();
+        }
 
-            // Decrease satisfaction.
-            this.SetSatisfaction(this.Satisfaction - 1);
+        private void OnOrderFailed(OrdersBehaviour.Order order)
+        {
+            this.DecreaseSatisfaction();
         }
 
         private void OnOrderFulfilled(OrdersBehaviour.Order order)
