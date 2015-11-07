@@ -15,6 +15,12 @@ public class GameManager : MonoBehaviour
     public event Action<Receipt> RecipeFailed;
     public event Action<Receipt> RecipeComplete;
 
+    Ingredient.type lastIngredientType;
+
+    List<AltarLayer> altarLayers;
+
+    Dictionary<Ingredient.type, int> ingredientCount;
+
     private void OnRecipeFailed(Receipt recipe)
     {
         var handler = this.RecipeFailed;
@@ -52,12 +58,13 @@ public class GameManager : MonoBehaviour
 	    {
         config = GameObject.Find("CONFIG").GetComponent<Config>();
 	    }
+
         UpdateReceiptBookText();
 
-        //TEST
-        //currentReceipt = config.receiptBook[0];
 
-        
+
+        //altar = GameObject.Find("World/Altar");
+
     }
 
     
@@ -95,10 +102,12 @@ public class GameManager : MonoBehaviour
             if(ing == Ingredient.type.Candle || ing == Ingredient.type.Corn || ing == Ingredient.type.Grub)
                 UpdateAltar(ing);
 
-            if (ing == Ingredient.type.Light || ing == Ingredient.type.Fire)
+            if (ing == Ingredient.type.Light || ing == Ingredient.type.Fire || ing == Ingredient.type.Cut)
             {
                 UpgradeAltar(ing);
             }
+
+            lastIngredientType = ing;
         }
 
         else
@@ -129,15 +138,47 @@ public class GameManager : MonoBehaviour
 
     private void UpdateAltar(Ingredient.type ing)
     {
-        altar.transform.FindChild(ing.ToString()).gameObject.SetActive(true);
+        //altar.transform.FindChild(ing.ToString().Contains).gameObject.SetActive(true);
+
+        //foreach (AltarLayer layer in altar.transform.GetComponentsInChildren<AltarLayer>())
+        //{
+        //    if (layer.transform.name.Contains(ing.ToString()))
+        //    {
+        //        if (!layer.gameObject.activeSelf)
+        //        {
+        //            layer.gameObject.SetActive(true);
+        //            break;
+        //        }
+        //    }
+        //}
+
+        for (int i = 0; i < altar.transform.childCount; i++)
+        {
+            if(altar.transform.GetChild(i).name.Contains(ing.ToString()))
+                if (!altar.transform.GetChild(i).gameObject.activeSelf)
+                {
+                    altar.transform.GetChild(i).gameObject.SetActive(true);
+                    break;
+                }
+        }
         //altar.transform.FindChild(ing.ToString()).GetComponent<AltarLayer>().Count++;
     }
 
     private void UpgradeAltar(Ingredient.type ing)
     {
         //upgrade last ingredient
-        string lastIngredient = currentIngredients[currentIngredients.Count - 2].ToString();
-        altar.transform.FindChild(lastIngredient).GetComponent<AltarLayer>().Upgrade();
+
+        //string lastIngredient = currentIngredients[currentIngredients.Count - 2].ToString();
+        //altar.transform.FindChild(lastIngredient).GetComponent<AltarLayer>().Upgrade();
+
+
+        for (int i = 0; i < altar.transform.childCount; i++)
+        {
+                if (altar.transform.GetChild(i).gameObject.activeSelf)
+                {
+                    altar.transform.GetChild(i).GetComponent<AltarLayer>().Upgrade(ing);
+                }
+        }
     }
 
     private void ResetIngredients()
@@ -153,7 +194,7 @@ public class GameManager : MonoBehaviour
         {
             // deactivate layers and count
             altar.transform.GetChild(i).gameObject.SetActive(false);
-            altar.transform.GetChild(i).GetComponent<AltarLayer>().Count = 1;
+            altar.transform.GetChild(i).GetComponent<AltarLayer>().Index = 0;
         }
     }
 

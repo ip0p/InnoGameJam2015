@@ -4,32 +4,45 @@ using System.Collections.Generic;
 
 public class AltarLayer : MonoBehaviour {
 
-    int count = 1;
     public List<Sprite> images;
-    public List<Sprite> upgradedImages;
 
-    public int Count
+    public Ingredient.type IngredientType;
+    private int index;
+
+    public int Index
     {
         get
         {
-            return count;
+            return index;
         }
 
         set
         {
-            count = value;
+            index = value;
             SetImage();
         }
     }
 
     void SetImage()
     {
-        GetComponent<Image>().sprite = images[count - 1];
+        
+            GetComponent<SpriteRenderer>().sprite = images[index];
     }
 
-    public void Upgrade()
+    public void Upgrade(Ingredient.type ing)
     {
-        GetComponent<Image>().sprite = upgradedImages[count - 1];
+        switch(ing)
+        {
+            case Ingredient.type.Fire:
+                if (images[1] != null && index == 0)
+                    Index = 1;
+                break;
+
+            case Ingredient.type.Cut:
+                if (images[2] != null && index == 0)
+                    Index = 2;
+                break;
+        }
     }
 
 
