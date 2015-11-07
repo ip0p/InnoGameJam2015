@@ -56,6 +56,7 @@
             var victoryContext = new VictoryContext();
             if (this.Victory != null)
             {
+                victoryContext.Satisfaction = this.Victory.Satisfaction;
                 this.Victory.VictoryContext = victoryContext;
                 this.Victory.Defeat += this.OnDefeat;
             }

@@ -33,13 +33,26 @@
         /// </summary>
         public VictoryContext VictoryContext;
 
-        private Satisfaction satisfaction = Satisfaction.Neutral;
+        #endregion
+
+        #region Constructors and Destructors
+
+        public VictoryBehaviour()
+        {
+            this.Satisfaction = Satisfaction.Neutral;
+        }
 
         #endregion
 
         #region Events
 
         public event Action Defeat;
+
+        #endregion
+
+        #region Properties
+
+        public Satisfaction Satisfaction { get; private set; }
 
         #endregion
 
@@ -75,34 +88,34 @@
         private void OnOrderExpired(OrdersBehaviour.Order order)
         {
             // Check if loosing game.
-            if (this.satisfaction == Satisfaction.VeryAngry)
+            if (this.Satisfaction == Satisfaction.VeryAngry)
             {
                 this.OnDefeat();
                 return;
             }
 
             // Decrease satisfaction.
-            this.SetSatisfaction(this.satisfaction - 1);
+            this.SetSatisfaction(this.Satisfaction - 1);
         }
 
         private void OnOrderFulfilled(OrdersBehaviour.Order order)
         {
             // Check if already super happy.
-            if (this.satisfaction == Satisfaction.VeryHappy)
+            if (this.Satisfaction == Satisfaction.VeryHappy)
             {
                 return;
             }
 
             // Increase satisfaction.
-            this.SetSatisfaction(this.satisfaction + 1);
+            this.SetSatisfaction(this.Satisfaction + 1);
         }
 
         private void SetSatisfaction(Satisfaction newSatisfaction)
         {
-            this.satisfaction = newSatisfaction;
+            this.Satisfaction = newSatisfaction;
             if (this.VictoryContext != null)
             {
-                this.VictoryContext.Satisfaction = this.satisfaction;
+                this.VictoryContext.Satisfaction = this.Satisfaction;
             }
         }
 
