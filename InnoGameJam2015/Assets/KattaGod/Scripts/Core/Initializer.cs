@@ -52,7 +52,7 @@
             // Create contexts.
             this.gameContext = new GameContext
             {
-                Inventory = new InventoryContext(),
+                Inventory = this.CreateInventory(),
                 Cookbook = new CookbookContext(),
                 Orders = new OrdersContext()
             };
@@ -70,7 +70,9 @@
             this.gameContext.Orders.SelectOrder += this.OnSelectOrder;
 
             // Load world.
-            this.AddScene(this.WorldScene, new WorldContext() { Orders = this.gameContext.Orders });
+            var worldContext = new WorldContext() { Orders = this.gameContext.Orders };
+            worldContext.DropItem += this.OnDropItem;
+            this.AddScene(this.WorldScene, worldContext);
 
             // Load hud.
             this.AddScene(
@@ -102,6 +104,38 @@
                     contextHolder.Context = context;
                 }
             }
+
+            // Try to get special objects from scene.
+            if (this.GameManager != null)
+            {
+                var altarGameObject = GameObject.FindGameObjectWithTag("Altar");
+                if (altarGameObject != null)
+                {
+                    this.GameManager.altar = altarGameObject;
+                }
+            }
+        }
+
+        private InventoryContext CreateInventory()
+        {
+            var inventoryContext = new InventoryContext();
+
+            // Add items for ingredients.
+            inventoryContext.Items.Add(this.CreateItem(Ingredient.type.Grub));
+            inventoryContext.Items.Add(this.CreateItem(Ingredient.type.Candle));
+            inventoryContext.Items.Add(this.CreateItem(Ingredient.type.Corn));
+
+            return inventoryContext;
+        }
+
+        private ItemContext CreateItem(Ingredient.type ingredientType)
+        {
+            return new ItemContext()
+            {
+                IngredientType = ingredientType,
+                Icon = ingredientType.ToString(),
+                Name = ingredientType.ToString()
+            };
         }
 
         private RecipeContext CreateRecipe(Receipt recipe)
@@ -123,6 +157,18 @@
         private RecipeContext GetRecipeContext(Receipt recipe)
         {
             return this.recipes.FirstOrDefault(recipeContext => recipeContext.Id == recipe.ID);
+        }
+
+        private void OnDropItem(ItemContext item)
+        {
+            // Check if active recipe.
+            if (this.GameManager.CurrentReceipt == null)
+            {
+                Debug.Log("No active recipe.");
+                return;
+            }
+
+            this.GameManager.AddIngredient(item.IngredientType);
         }
 
         private void OnOrderAdded(OrdersBehaviour.Order order)
@@ -148,7 +194,8 @@
 
         private void OnOrderSelected(OrdersBehaviour.Order order)
         {
-            // TODO(co): Set recipe of order to game manager.
+            // Set recipe of order to game manager.
+            this.GameManager.CurrentReceipt = order.Recipe;
 
             var orderContext = this.GetOrderContext(order);
             if (orderContext != null)

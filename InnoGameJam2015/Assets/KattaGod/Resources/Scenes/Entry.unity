@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Config: {fileID: 2044164453}
+  GameManager: {fileID: 2044164452}
   HudScene: Hud
   Orders: {fileID: 2044164451}
   WorldScene: World
@@ -243,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b6d9c62de1034145905ce9234f991ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  altar: {fileID: 0}
   receiptText: {fileID: 0}
   config: {fileID: 2044164453}
 --- !u!114 &2044164453
@@ -261,8 +263,8 @@ MonoBehaviour:
     BaseDuration: 5
     symbol: {fileID: 0}
     ingredients:
-    - currenttype: 0
-    - currenttype: 1
+    - currentType: 2
+    - currentType: 1
 --- !u!114 &2044164454
 MonoBehaviour:
   m_ObjectHideFlags: 0

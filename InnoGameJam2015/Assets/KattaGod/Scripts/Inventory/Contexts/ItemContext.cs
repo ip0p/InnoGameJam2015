@@ -26,6 +26,8 @@
             }
         }
 
+        public Ingredient.type IngredientType { get; set; }
+
         public string Name
         {
             get

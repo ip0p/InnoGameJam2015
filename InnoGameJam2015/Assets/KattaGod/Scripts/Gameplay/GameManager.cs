@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         UpdateReceiptBookText();
 
         //TEST
-        currentReceipt = config.receiptBook[0];
+        //currentReceipt = config.receiptBook[0];
 
         
     }

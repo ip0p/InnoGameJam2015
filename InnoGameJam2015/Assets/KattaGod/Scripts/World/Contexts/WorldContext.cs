@@ -1,5 +1,7 @@
 ﻿namespace KattaGod.World.Contexts
 {
+    using System;
+
     using KattaGod.Inventory.Contexts;
     using KattaGod.Orders.Contexts;
 
@@ -12,6 +14,12 @@
         #region Fields
 
         private readonly Property<OrdersContext> ordersProperty = new Property<OrdersContext>();
+
+        #endregion
+
+        #region Events
+
+        public event Action<ItemContext> DropItem;
 
         #endregion
 
@@ -36,6 +44,20 @@
         public void DoDropItem(ItemContext item)
         {
             Debug.Log("Dropped item " + item);
+            this.OnDropItem(item);
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void OnDropItem(ItemContext item)
+        {
+            var handler = this.DropItem;
+            if (handler != null)
+            {
+                handler(item);
+            }
         }
 
         #endregion
