@@ -10,6 +10,8 @@
     {
         #region Fields
 
+        public GameManager GameManager;
+
         public List<Order> Orders;
 
         private uint nextId = 1;
@@ -23,6 +25,8 @@
         public event Action<Order> OrderExpired;
 
         public event Action<Order> OrderFulfilled;
+
+        public event Action<Order> OrderFailed;
 
         public event Action<Order> OrderSelected;
 
@@ -43,17 +47,6 @@
             var order = new Order() { Recipe = recipe, RemainingDuration = duration, Id = this.nextId++ };
             this.Orders.Add(order);
             this.OnOrderAdded(order);
-        }
-
-        public void FulfillSelectedOrder()
-        {
-            if (this.SelectedOrder == null)
-            {
-                return;
-            }
-
-            this.OnOrderFulfilled(this.SelectedOrder);
-            this.ClearSelectedOrder();
         }
 
         public void SelectOrder(uint orderId)
@@ -83,6 +76,24 @@
         protected void Awake()
         {
             this.Orders = new List<Order>();
+        }
+
+        protected void OnDisable()
+        {
+            if (this.GameManager != null)
+            {
+                this.GameManager.RecipeComplete -= this.OnRecipeCompleted;
+                this.GameManager.RecipeFailed -= this.OnRecipeFailed;
+            }
+        }
+
+        protected void OnEnable()
+        {
+            if (this.GameManager != null)
+            {
+                this.GameManager.RecipeComplete += this.OnRecipeCompleted;
+                this.GameManager.RecipeFailed += this.OnRecipeFailed;
+            }
         }
 
         protected void Update()
@@ -120,6 +131,38 @@
             this.OnOrderSelected(null);
         }
 
+        private void FailSelectedOrder()
+        {
+            if (this.SelectedOrder == null)
+            {
+                return;
+            }
+
+            this.OnOrderFailed(this.SelectedOrder);
+
+            // Remove order.
+            this.Orders.Remove(this.SelectedOrder);
+            this.OnOrderRemoved(this.SelectedOrder);
+
+            this.ClearSelectedOrder();
+        }
+
+        private void FulfillSelectedOrder()
+        {
+            if (this.SelectedOrder == null)
+            {
+                return;
+            }
+            
+            this.OnOrderFulfilled(this.SelectedOrder);
+
+            // Remove order.
+            this.Orders.Remove(this.SelectedOrder);
+            this.OnOrderRemoved(this.SelectedOrder);
+
+            this.ClearSelectedOrder();
+        }
+
         private void OnOrderAdded(Order order)
         {
             var handler = this.OrderAdded;
@@ -132,6 +175,15 @@
         private void OnOrderExpired(Order order)
         {
             var handler = this.OrderExpired;
+            if (handler != null)
+            {
+                handler(order);
+            }
+        }
+
+        private void OnOrderFailed(Order order)
+        {
+            var handler = this.OrderFailed;
             if (handler != null)
             {
                 handler(order);
@@ -163,6 +215,30 @@
             {
                 handler(order);
             }
+        }
+
+        private void OnRecipeCompleted(Receipt recipe)
+        {
+            // Check if selected order.
+            if (this.SelectedOrder == null || this.SelectedOrder.Recipe != recipe)
+            {
+                return;
+            }
+
+            // Fulfill order.
+            this.FulfillSelectedOrder();
+        }
+
+        private void OnRecipeFailed(Receipt recipe)
+        {
+            // Check if selected order.
+            if (this.SelectedOrder == null || this.SelectedOrder.Recipe != recipe)
+            {
+                return;
+            }
+
+            // Fail order.
+            this.FailSelectedOrder();
         }
 
         #endregion

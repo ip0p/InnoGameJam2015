@@ -24,12 +24,18 @@ public class AltarLayer : MonoBehaviour {
 
     void SetImage()
     {
-        GetComponent<Image>().sprite = images[count - 1];
+        if (images.Count >= count)
+        {
+            GetComponent<Image>().sprite = images[count - 1];
+        }
     }
 
     public void Upgrade()
     {
-        GetComponent<Image>().sprite = upgradedImages[count - 1];
+        if (images.Count >= count)
+        {
+            GetComponent<Image>().sprite = upgradedImages[count - 1];
+        }
     }
 
 

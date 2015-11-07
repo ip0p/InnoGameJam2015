@@ -99,6 +99,18 @@ public class GameManager : MonoBehaviour
             {
                 UpgradeAltar(ing);
             }
+
+            // receipt complete?
+            if (currentIngredients.Count == currentReceipt.Ingredients.Count)
+            {
+                print("Receipt complete!");
+
+                OnRecipeComplete(currentReceipt);
+                // reset current ingredients and altar layers
+                ResetIngredients();
+
+                // get random new receipt
+            }
         }
 
         else
@@ -107,18 +119,6 @@ public class GameManager : MonoBehaviour
             ResetIngredients();
             OnRecipeFailed(currentReceipt);
             // fail
-        }
-
-        // receipt complete?
-        if (currentIngredients.Count == currentReceipt.Ingredients.Count)
-        {
-            print("Receipt complete!");
-
-            OnRecipeComplete(currentReceipt);
-            // reset current ingredients and altar layers
-            ResetIngredients();
-
-            // get random new receipt
         }
     }
 
