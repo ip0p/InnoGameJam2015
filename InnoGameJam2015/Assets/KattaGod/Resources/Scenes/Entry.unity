@@ -271,7 +271,14 @@ MonoBehaviour:
     symbol: {fileID: 0}
     ingredients:
     - currentType: 2
+    - currentType: 5
     - currentType: 1
+    - currentType: 1
+    - currentType: 4
+    - currentType: 4
+    - currentType: 4
+    - currentType: 4
+    - currentType: 3
 --- !u!114 &2044164454
 MonoBehaviour:
   m_ObjectHideFlags: 0

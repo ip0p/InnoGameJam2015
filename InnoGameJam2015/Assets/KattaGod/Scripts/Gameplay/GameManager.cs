@@ -108,26 +108,25 @@ public class GameManager : MonoBehaviour
             }
 
             lastIngredientType = ing;
-        }
 
+            // receipt complete?
+            if (currentIngredients.Count == currentReceipt.Ingredients.Count)
+            {
+                print("Receipt complete!");
+
+                OnRecipeComplete(currentReceipt);
+                // reset current ingredients and altar layers
+                ResetIngredients();
+
+                // get random new receipt
+            }
+        }
         else
         {
             // reset current ingredients and altar layers
             ResetIngredients();
             OnRecipeFailed(currentReceipt);
             // fail
-        }
-
-        // receipt complete?
-        if (currentIngredients.Count == currentReceipt.Ingredients.Count)
-        {
-            print("Receipt complete!");
-
-            OnRecipeComplete(currentReceipt);
-            // reset current ingredients and altar layers
-            ResetIngredients();
-
-            // get random new receipt
         }
     }
 
