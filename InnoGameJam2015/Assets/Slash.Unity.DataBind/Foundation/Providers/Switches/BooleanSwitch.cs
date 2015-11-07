@@ -1,0 +1,61 @@
+﻿namespace Slash.Unity.DataBind.Foundation.Providers.Switches
+{
+    using Slash.Unity.DataBind.Core.Presentation;
+
+    using UnityEngine;
+
+    /// <summary>
+    ///   Data provider which chooses one of two options depending on a provided boolean value.
+    ///   <para>Input: Boolean (Switch).</para>
+    ///   <para>Output: Object (Chosen data).</para>
+    /// </summary>
+    [AddComponentMenu("Data Bind/Foundation/Switches/[DB] Boolean Switch")]
+    public class BooleanSwitch : DataProvider
+    {
+        #region Fields
+
+        [Tooltip("Data to use if switch is false.")]
+        public DataBinding OptionFalse;
+
+        [Tooltip("Data to use if switch is true.")]
+        public DataBinding OptionTrue;
+
+        [Tooltip("Switch to decide which option to use.")]
+        public DataBinding Switch;
+
+        #endregion
+
+        #region Properties
+
+        public override object Value
+        {
+            get
+            {
+                // Get value of switch.
+                var switchValue = this.Switch.GetValue<bool>();
+                return switchValue ? this.OptionTrue.Value : this.OptionFalse.Value;
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///   Unity callback.
+        /// </summary>
+        protected void Awake()
+        {
+            this.AddBinding(this.Switch);
+            this.AddBinding(this.OptionTrue);
+            this.AddBinding(this.OptionFalse);
+        }
+
+        protected override void UpdateValue()
+        {
+            this.OnValueChanged(this.Value);
+        }
+
+        #endregion
+    }
+}
