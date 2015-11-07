@@ -8,36 +8,30 @@ public class Ingredient {
     [Serializable]
     public enum type
     {
-        shake,
-        dance,
-        drum
+        None,
+        Corn,
+        Grub,
+        Dance,
+        Candle,
+        Fire,
+        Light,
+        Praise,
+        Cut,
     }
-
-    //GameManager gameManager;
 
     [SerializeField]
-    type currenttype;
+    type currentType;
 
-    void Start()
-    {
-        //GameObject.Find("GameManager").GetComponent<GameManager>();
-    }
-
-    public type Currenttype
+    public type CurrentType
     {
         get
         {
-            return currenttype;
+            return currentType;
         }
 
         set
         {
-            currenttype = value;
+            currentType = value;
         }
-    }
-
-    public void Add()
-    {
-        //gameManager.AddIngredient(this);
     }
 }
