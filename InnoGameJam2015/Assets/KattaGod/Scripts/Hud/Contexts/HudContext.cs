@@ -1,6 +1,7 @@
 ﻿namespace KattaGod.Hud.Contexts
 {
     using KattaGod.Cookbook.Contexts;
+    using KattaGod.Inventory.Contexts;
 
     using Slash.Unity.DataBind.Core.Data;
 
@@ -9,6 +10,8 @@
         #region Fields
 
         private readonly Property<CookbookContext> cookbookProperty = new Property<CookbookContext>();
+
+        private readonly Property<InventoryContext> inventoryProperty = new Property<InventoryContext>();
 
         #endregion
 
@@ -23,6 +26,18 @@
             set
             {
                 this.cookbookProperty.Value = value;
+            }
+        }
+
+        public InventoryContext Inventory
+        {
+            get
+            {
+                return this.inventoryProperty.Value;
+            }
+            set
+            {
+                this.inventoryProperty.Value = value;
             }
         }
 

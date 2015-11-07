@@ -1,13 +1,16 @@
 ﻿namespace KattaGod.Hud.Contexts
 {
     using KattaGod.Cookbook.Contexts;
+    using KattaGod.Inventory.Contexts;
     using KattaGod.Recipes.Contexts;
 
     using Slash.Unity.DataBind.Core.Data;
 
     public class DummyHudContext : HudContext
 
-{
+    {
+        #region Constructors and Destructors
+
         public DummyHudContext()
         {
             this.Cookbook = new CookbookContext
@@ -19,7 +22,7 @@
                         Steps =
                             new Collection<StepContext>()
                             {
-                                new StepContext() { Text = "Put a grab on the altar" },
+                                new StepContext() { Text = "Put a grub on the altar" },
                                 new StepContext() { Text = "Roast the sacrifice" },
                                 new StepContext() { Text = "Put corn on the altar" },
                                 new StepContext() { Text = "Put corn on the altar" },
@@ -32,6 +35,18 @@
                             }
                     }
             };
+            this.Inventory = new InventoryContext
+            {
+                Items =
+                    new Collection<ItemContext>
+                    {
+                        new ItemContext() { Name = "Grub", Icon = "grub" },
+                        new ItemContext() { Name = "Corn", Icon = "corn" },
+                        new ItemContext() { Name = "Candle", Icon = "candle" }
+                    }
+            };
         }
-}
+
+        #endregion
+    }
 }
