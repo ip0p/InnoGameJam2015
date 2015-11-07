@@ -10,6 +10,8 @@
     using KattaGod.Inventory.Contexts;
     using KattaGod.Orders;
     using KattaGod.Orders.Contexts;
+    using KattaGod.Progression;
+    using KattaGod.Progression.Contexts;
     using KattaGod.Recipes.Contexts;
     using KattaGod.World.Contexts;
 
@@ -29,6 +31,8 @@
 
         public OrdersBehaviour Orders;
 
+        public VictoryBehaviour Victory;
+
         public string WorldScene = "World";
 
         private GameContext gameContext;
@@ -47,6 +51,13 @@
                 this.Orders.OrderAdded += this.OnOrderAdded;
                 this.Orders.OrderRemoved += this.OnOrderRemoved;
                 this.Orders.OrderSelected += this.OnOrderSelected;
+            }
+
+            var victoryContext = new VictoryContext();
+            if (this.Victory != null)
+            {
+                this.Victory.VictoryContext = victoryContext;
+                this.Victory.Defeat += this.OnDefeat;
             }
 
             // Create contexts.
@@ -70,7 +81,7 @@
             this.gameContext.Orders.SelectOrder += this.OnSelectOrder;
 
             // Load world.
-            var worldContext = new WorldContext() { Orders = this.gameContext.Orders };
+            var worldContext = new WorldContext { Orders = this.gameContext.Orders, Victory = victoryContext };
             worldContext.DropItem += this.OnDropItem;
             this.AddScene(this.WorldScene, worldContext);
 
@@ -157,6 +168,11 @@
         private RecipeContext GetRecipeContext(Receipt recipe)
         {
             return this.recipes.FirstOrDefault(recipeContext => recipeContext.Id == recipe.ID);
+        }
+
+        private void OnDefeat()
+        {
+            Debug.Log("DEFEAT");
         }
 
         private void OnDropItem(ItemContext item)

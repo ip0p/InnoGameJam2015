@@ -4,6 +4,7 @@
 
     using KattaGod.Inventory.Contexts;
     using KattaGod.Orders.Contexts;
+    using KattaGod.Progression.Contexts;
 
     using Slash.Unity.DataBind.Core.Data;
 
@@ -14,6 +15,8 @@
         #region Fields
 
         private readonly Property<OrdersContext> ordersProperty = new Property<OrdersContext>();
+
+        private readonly Property<VictoryContext> victoryProperty = new Property<VictoryContext>();
 
         #endregion
 
@@ -34,6 +37,18 @@
             set
             {
                 this.ordersProperty.Value = value;
+            }
+        }
+
+        public VictoryContext Victory
+        {
+            get
+            {
+                return this.victoryProperty.Value;
+            }
+            set
+            {
+                this.victoryProperty.Value = value;
             }
         }
 

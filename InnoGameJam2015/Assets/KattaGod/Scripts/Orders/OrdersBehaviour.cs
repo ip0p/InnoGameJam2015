@@ -22,6 +22,8 @@
 
         public event Action<Order> OrderExpired;
 
+        public event Action<Order> OrderFulfilled;
+
         public event Action<Order> OrderSelected;
 
         public event Action<Order> OrderRemoved;
@@ -41,6 +43,17 @@
             var order = new Order() { Recipe = recipe, RemainingDuration = duration, Id = this.nextId++ };
             this.Orders.Add(order);
             this.OnOrderAdded(order);
+        }
+
+        public void FulfillSelectedOrder()
+        {
+            if (this.SelectedOrder == null)
+            {
+                return;
+            }
+
+            this.OnOrderFulfilled(this.SelectedOrder);
+            this.ClearSelectedOrder();
         }
 
         public void SelectOrder(uint orderId)
@@ -119,6 +132,15 @@
         private void OnOrderExpired(Order order)
         {
             var handler = this.OrderExpired;
+            if (handler != null)
+            {
+                handler(order);
+            }
+        }
+
+        private void OnOrderFulfilled(Order order)
+        {
+            var handler = this.OrderFulfilled;
             if (handler != null)
             {
                 handler(order);
