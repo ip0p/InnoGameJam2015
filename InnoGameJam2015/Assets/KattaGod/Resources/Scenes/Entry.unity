@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   receiptBook:
-  - ID: Bloody Grub
+  - ID: bloody_crab
     BaseDuration: 5
     symbol: {fileID: 0}
     ingredients:
