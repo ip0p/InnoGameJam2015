@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52810080369457448bfbf5c6f1c0ab6, type: 3}
   m_Name: TextSettings
   m_EditorClassIdentifier: 
-  Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  Font: {fileID: 12800000, guid: 308b7e478cc31bf4eaf7dd5e35932747, type: 3}
   OutlineSettings:
     Color: {r: 0, g: 0, b: 0, a: 0}
     Distance: {x: 0, y: 0}
@@ -22,8 +22,8 @@ MonoBehaviour:
     UseEffect: 0
   Styles:
   - Name: Big
-    Size: 40
+    Size: 80
   - Name: Medium
-    Size: 35
+    Size: 60
   - Name: Small
-    Size: 30
+    Size: 40
