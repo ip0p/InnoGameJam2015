@@ -10,8 +10,28 @@ public class GameManager : MonoBehaviour
     public Config config;
     List<Ingredient.type> currentIngredients = new List<Ingredient.type>();
     float receiptChangeTime = 4f;
-
     private Receipt currentReceipt;
+
+    public event Action<Receipt> RecipeFailed;
+    public event Action<Receipt> RecipeComplete;
+
+    private void OnRecipeFailed(Receipt recipe)
+    {
+        var handler = this.RecipeFailed;
+        if (handler != null)
+        {
+            handler(recipe);
+        }
+    }
+
+    private void OnRecipeComplete(Receipt recipe)
+    {
+        var handler = this.RecipeComplete;
+        if (handler != null)
+        {
+            handler(recipe);
+        }
+    }
 
     public Receipt CurrentReceipt
     {
@@ -36,7 +56,11 @@ public class GameManager : MonoBehaviour
 
         //TEST
         currentReceipt = config.receiptBook[0];
+
+        
     }
+
+    
 
     void UpdateReceiptBookText()
     {
@@ -81,7 +105,7 @@ public class GameManager : MonoBehaviour
         {
             // reset current ingredients and altar layers
             ResetIngredients();
-
+            OnRecipeFailed(currentReceipt);
             // fail
         }
 
@@ -90,6 +114,7 @@ public class GameManager : MonoBehaviour
         {
             print("Receipt complete!");
 
+            OnRecipeComplete(currentReceipt);
             // reset current ingredients and altar layers
             ResetIngredients();
 
