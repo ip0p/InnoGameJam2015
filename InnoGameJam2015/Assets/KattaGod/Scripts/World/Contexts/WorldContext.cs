@@ -4,18 +4,19 @@
 
     using KattaGod.Fire.Contexts;
     using KattaGod.Inventory.Contexts;
+    using KattaGod.Mama.Contexts;
     using KattaGod.Orders.Contexts;
     using KattaGod.Progression.Contexts;
 
     using Slash.Unity.DataBind.Core.Data;
-
-    using UnityEngine;
 
     public class WorldContext : Context
     {
         #region Fields
 
         private readonly Property<FireContext> fireProperty = new Property<FireContext>();
+
+        private readonly Property<MamaContext> mamaProperty = new Property<MamaContext>();
 
         private readonly Property<OrdersContext> ordersProperty = new Property<OrdersContext>();
 
@@ -40,6 +41,18 @@
             set
             {
                 this.fireProperty.Value = value;
+            }
+        }
+
+        public MamaContext Mama
+        {
+            get
+            {
+                return this.mamaProperty.Value;
+            }
+            set
+            {
+                this.mamaProperty.Value = value;
             }
         }
 

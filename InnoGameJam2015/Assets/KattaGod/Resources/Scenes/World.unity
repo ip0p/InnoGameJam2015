@@ -401,6 +401,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1924219086}
+  - {fileID: 1167618710}
   m_Father: {fileID: 781837534}
   m_RootOrder: 3
 --- !u!1 &718280199
@@ -865,6 +866,91 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1873421576}
   m_RootOrder: 0
+--- !u!1 &1167618709
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1167618710}
+  - 61: {fileID: 1167618711}
+  - 114: {fileID: 1167618712}
+  - 114: {fileID: 1167618714}
+  - 114: {fileID: 1167618713}
+  m_Layer: 0
+  m_Name: Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1167618710
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1167618709}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .119999997, y: -.589999974, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 611067531}
+  m_RootOrder: 1
+--- !u!61 &1167618711
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1167618709}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 2.79999995, y: 4.44999981}
+--- !u!114 &1167618712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1167618709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c1205a9dd999f341a18adec520ad4e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxBuffer: .5
+  MinimumSpeed: 1
+--- !u!114 &1167618713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1167618709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d955e67cc0c19934c988ce3e01876c0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AdditionalArguments: []
+  Path: Mama.DoEndDancing
+  Target: {fileID: 1167618712}
+--- !u!114 &1167618714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1167618709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 350bf397a2e4ef94898d92c1b5b1ea1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AdditionalArguments: []
+  Path: Mama.DoStartDancing
+  Target: {fileID: 1167618712}
 --- !u!1 &1219329312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,6 +1301,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1924219086}
   - 212: {fileID: 1924219085}
+  - 95: {fileID: 1924219087}
+  - 114: {fileID: 1924219089}
+  - 114: {fileID: 1924219088}
   m_Layer: 0
   m_Name: Visualization
   m_TagString: Untagged
@@ -1260,6 +1349,61 @@ Transform:
   m_Children: []
   m_Father: {fileID: 611067531}
   m_RootOrder: 0
+--- !u!95 &1924219087
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1924219084}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 482a3ad267940794189f95ead729dac2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &1924219088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1924219084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9bb21019e35a14db32fa5992a428bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data:
+    Constant: 
+    Path: Mama.IsPraising
+    Provider: {fileID: 0}
+    Reference: {fileID: 0}
+    Type: 0
+  Target: {fileID: 1924219087}
+  AnimatorParameterName: IsPraising
+--- !u!114 &1924219089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1924219084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9bb21019e35a14db32fa5992a428bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data:
+    Constant: 
+    Path: Mama.IsDancing
+    Provider: {fileID: 0}
+    Reference: {fileID: 0}
+    Type: 0
+  Target: {fileID: 1924219087}
+  AnimatorParameterName: IsDancing
 --- !u!1 &1966586163
 GameObject:
   m_ObjectHideFlags: 0

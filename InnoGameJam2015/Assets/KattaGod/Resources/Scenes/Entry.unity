@@ -116,6 +116,7 @@ MonoBehaviour:
   Fire: {fileID: 2044164457}
   GameManager: {fileID: 2044164452}
   HudScene: Hud
+  Mama: {fileID: 2044164458}
   Orders: {fileID: 2044164451}
   Victory: {fileID: 2044164456}
   WorldScene: World
@@ -219,6 +220,7 @@ GameObject:
   - 114: {fileID: 2044164451}
   - 114: {fileID: 2044164456}
   - 114: {fileID: 2044164457}
+  - 114: {fileID: 2044164458}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -322,3 +324,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RequiredBurnDuration: 2
+--- !u!114 &2044164458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2044164450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7897aea813647947ba1c3a564a04d4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RequiredDanceDuration: 2
+  RequiredPraiseDuration: 2

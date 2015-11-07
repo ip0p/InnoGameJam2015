@@ -10,6 +10,8 @@
     using KattaGod.Fire.Contexts;
     using KattaGod.Hud.Contexts;
     using KattaGod.Inventory.Contexts;
+    using KattaGod.Mama;
+    using KattaGod.Mama.Contexts;
     using KattaGod.Orders;
     using KattaGod.Orders.Contexts;
     using KattaGod.Progression;
@@ -32,6 +34,8 @@
         public GameManager GameManager;
 
         public string HudScene = "Hud";
+
+        public MamaBehaviour Mama;
 
         public OrdersBehaviour Orders;
 
@@ -64,6 +68,14 @@
                 this.Fire.BurnCompleted += this.OnBurnCompleted;
             }
 
+            var mamaContext = new MamaContext();
+            if (this.Mama != null)
+            {
+                this.Mama.Init(mamaContext);
+                this.Mama.DanceCompleted += this.OnDanceCompleted;
+                this.Mama.PraiseCompleted += this.OnPraiseCompleted;
+            }
+
             var victoryContext = new VictoryContext();
             if (this.Victory != null)
             {
@@ -93,7 +105,13 @@
             this.gameContext.Orders.SelectOrder += this.OnSelectOrder;
 
             // Load world.
-            var worldContext = new WorldContext { Orders = this.gameContext.Orders, Victory = victoryContext, Fire = fireContext };
+            var worldContext = new WorldContext
+            {
+                Orders = this.gameContext.Orders,
+                Victory = victoryContext,
+                Fire = fireContext,
+                Mama = mamaContext
+            };
             worldContext.DropItem += this.OnDropItem;
             this.AddScene(this.WorldScene, worldContext);
 
@@ -186,10 +204,12 @@
 
         private void OnBurnCompleted()
         {
-            if (this.GameManager != null && this.GameManager.CurrentReceipt != null)
-            {
-                this.GameManager.AddIngredient(Ingredient.type.Fire);
-            }
+            this.TryAddIngredient(Ingredient.type.Fire);
+        }
+
+        private void OnDanceCompleted()
+        {
+            this.TryAddIngredient(Ingredient.type.Dance);
         }
 
         private void OnDefeat()
@@ -244,6 +264,11 @@
             this.gameContext.Cookbook.Recipe = orderContext != null ? orderContext.Recipe : null;
         }
 
+        private void OnPraiseCompleted()
+        {
+            this.TryAddIngredient(Ingredient.type.Praise);
+        }
+
         private void OnSelectOrder(OrderContext order)
         {
             Debug.Log("Select order: " + order);
@@ -256,6 +281,14 @@
             }
 
             this.Orders.SelectOrder(order.Id);
+        }
+
+        private void TryAddIngredient(Ingredient.type ingredientType)
+        {
+            if (this.GameManager != null && this.GameManager.CurrentReceipt != null)
+            {
+                this.GameManager.AddIngredient(ingredientType);
+            }
         }
 
         #endregion

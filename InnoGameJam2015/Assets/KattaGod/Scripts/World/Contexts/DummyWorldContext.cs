@@ -1,6 +1,7 @@
 ﻿namespace KattaGod.World.Contexts
 {
     using KattaGod.Fire.Contexts;
+    using KattaGod.Mama.Contexts;
     using KattaGod.Orders.Contexts;
     using KattaGod.Recipes.Contexts;
 
@@ -23,6 +24,7 @@
                     }
             };
             this.Fire = new FireContext();
+            this.Mama = new MamaContext();
         }
 
         #endregion
