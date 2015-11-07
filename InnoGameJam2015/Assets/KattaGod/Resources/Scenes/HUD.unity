@@ -366,7 +366,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bloody Grab
+  m_Text: Recipe Title
 --- !u!222 &712788177
 CanvasRenderer:
   m_ObjectHideFlags: 0

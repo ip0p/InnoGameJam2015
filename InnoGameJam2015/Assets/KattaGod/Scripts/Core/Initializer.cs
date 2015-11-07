@@ -23,6 +23,8 @@
 
         public Config Config;
 
+        public GameManager GameManager;
+
         public string HudScene = "Hud";
 
         public OrdersBehaviour Orders;
@@ -62,6 +64,9 @@
                     this.recipes.Add(this.CreateRecipe(recipe));
                 }
             }
+
+            // Register for commands.
+            this.gameContext.Orders.SelectOrder += this.OnSelectOrder;
 
             // Load world.
             this.AddScene(this.WorldScene, new WorldContext() { Orders = this.gameContext.Orders });
@@ -117,13 +122,13 @@
         private void OnOrderAdded(OrdersBehaviour.Order order)
         {
             var recipeContext = this.GetRecipeContext(order.Recipe);
-            this.gameContext.Orders.Orders.Add(
-                new OrderContext()
-                {
-                    Id = order.Id,
-                    Recipe = recipeContext,
-                    RemainingDuration = order.RemainingDuration
-                });
+            var orderContext = new OrderContext()
+            {
+                Id = order.Id,
+                Recipe = recipeContext,
+                RemainingDuration = order.RemainingDuration
+            };
+            this.gameContext.Orders.Orders.Add(orderContext);
         }
 
         private void OnOrderRemoved(OrdersBehaviour.Order order)
@@ -135,6 +140,17 @@
             {
                 this.gameContext.Orders.Orders.Remove(orderContext);
             }
+        }
+
+        private void OnSelectOrder(OrderContext order)
+        {
+            Debug.Log("Select order: " + order);
+
+            // TODO(co): Check if already working on recipe.
+            // TODO(co): Set recipe of order to game manager.
+
+            this.gameContext.Cookbook.Recipe = order.Recipe;
+            order.IsActive = true;
         }
 
         #endregion

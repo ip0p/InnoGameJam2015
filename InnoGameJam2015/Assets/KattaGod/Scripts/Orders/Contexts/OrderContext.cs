@@ -57,5 +57,14 @@
         }
 
         #endregion
+
+        #region Public Methods and Operators
+
+        public override string ToString()
+        {
+            return string.Format("Id: {0}", this.Id);
+        }
+
+        #endregion
     }
 }

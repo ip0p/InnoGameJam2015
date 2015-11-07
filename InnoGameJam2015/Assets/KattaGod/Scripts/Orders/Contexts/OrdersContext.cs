@@ -11,6 +11,18 @@
 
         #endregion
 
+        #region Delegates
+
+        public delegate void SelectOrderDelegate(OrderContext order);
+
+        #endregion
+
+        #region Events
+
+        public event SelectOrderDelegate SelectOrder;
+
+        #endregion
+
         #region Properties
 
         public Collection<OrderContext> Orders
@@ -22,6 +34,28 @@
             set
             {
                 this.ordersProperty.Value = value;
+            }
+        }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public void DoSelectOrder(OrderContext order)
+        {
+            this.OnSelectOrder(order);
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void OnSelectOrder(OrderContext order)
+        {
+            var handler = this.SelectOrder;
+            if (handler != null)
+            {
+                handler(order);
             }
         }
 
