@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 [Serializable]
-public class Ingredient : MonoBehaviour {
+public class Ingredient {
 
     [Serializable]
     public enum type
@@ -13,8 +13,15 @@ public class Ingredient : MonoBehaviour {
         drum
     }
 
+    //GameManager gameManager;
+
     [SerializeField]
     type currenttype;
+
+    void Start()
+    {
+        //GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
 
     public type Currenttype
     {
@@ -27,5 +34,10 @@ public class Ingredient : MonoBehaviour {
         {
             currenttype = value;
         }
+    }
+
+    public void Add()
+    {
+        //gameManager.AddIngredient(this);
     }
 }

@@ -2,11 +2,12 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     public Text receiptText;
     Config config;
-    List<Ingredient.type> currentIngredients;
+    List<Ingredient> currentIngredients;
 
 	void Start ()
     {
@@ -31,6 +32,6 @@ public class GameManager : MonoBehaviour {
 
     public void AddIngredient(Ingredient ing)
     {
-        
+        print("added" + ing.Currenttype.ToString());
     }
 }
