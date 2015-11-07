@@ -46,6 +46,7 @@
             {
                 this.Orders.OrderAdded += this.OnOrderAdded;
                 this.Orders.OrderRemoved += this.OnOrderRemoved;
+                this.Orders.OrderSelected += this.OnOrderSelected;
             }
 
             // Create contexts.
@@ -114,6 +115,11 @@
             return recipeContext;
         }
 
+        private OrderContext GetOrderContext(OrdersBehaviour.Order order)
+        {
+            return this.gameContext.Orders.Orders.FirstOrDefault(orderContext => orderContext.Id == order.Id);
+        }
+
         private RecipeContext GetRecipeContext(Receipt recipe)
         {
             return this.recipes.FirstOrDefault(recipeContext => recipeContext.Id == recipe.ID);
@@ -133,24 +139,38 @@
 
         private void OnOrderRemoved(OrdersBehaviour.Order order)
         {
-            var orderContext =
-                this.gameContext.Orders.Orders.FirstOrDefault(
-                    existingOrderContext => existingOrderContext.Id == order.Id);
+            var orderContext = this.GetOrderContext(order);
             if (orderContext != null)
             {
                 this.gameContext.Orders.Orders.Remove(orderContext);
             }
         }
 
+        private void OnOrderSelected(OrdersBehaviour.Order order)
+        {
+            // TODO(co): Set recipe of order to game manager.
+
+            var orderContext = this.GetOrderContext(order);
+            if (orderContext != null)
+            {
+                orderContext.IsActive = true;
+            }
+
+            this.gameContext.Cookbook.Recipe = orderContext != null ? orderContext.Recipe : null;
+        }
+
         private void OnSelectOrder(OrderContext order)
         {
             Debug.Log("Select order: " + order);
 
-            // TODO(co): Check if already working on recipe.
-            // TODO(co): Set recipe of order to game manager.
+            // Check if an order is already selected.
+            if (this.Orders.SelectedOrder != null)
+            {
+                Debug.Log("Other order already selected.");
+                return;
+            }
 
-            this.gameContext.Cookbook.Recipe = order.Recipe;
-            order.IsActive = true;
+            this.Orders.SelectOrder(order.Id);
         }
 
         #endregion
