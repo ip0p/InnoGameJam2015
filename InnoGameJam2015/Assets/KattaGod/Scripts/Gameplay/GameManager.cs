@@ -3,10 +3,10 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
+
 public class GameManager : MonoBehaviour
 {
     public GameObject altar;
-    public Text receiptText;
     public Config config;
     List<Ingredient.type> currentIngredients = new List<Ingredient.type>();
     float receiptChangeTime = 4f;
@@ -59,34 +59,12 @@ public class GameManager : MonoBehaviour
         config = GameObject.Find("CONFIG").GetComponent<Config>();
 	    }
 
-        UpdateReceiptBookText();
-
-
-
-        //altar = GameObject.Find("World/Altar");
-
+        GetComponent<KattaGod.Progression.VictoryBehaviour>().Defeat += GameManager_Defeat;
     }
 
-    
-
-    void UpdateReceiptBookText()
+    private void GameManager_Defeat()
     {
-        if (receiptText == null)
-        {
-            return;
-        }
-
-        receiptText.text = "";
-
-        foreach (Receipt receipt in config.receiptBook)
-        {
-            receiptText.text += receipt.ID + "\n";
-            receiptText.text += "------------" + "\n";
-            foreach (Ingredient ingredient in receipt.Ingredients)
-            {
-                receiptText.text += ingredient.CurrentType.ToString() + "\n";
-            }
-        }
+        Application.LoadLevel("GameOver");
     }
 
     public void AddIngredient(Ingredient.type ing)
@@ -137,20 +115,6 @@ public class GameManager : MonoBehaviour
 
     private void UpdateAltar(Ingredient.type ing)
     {
-        //altar.transform.FindChild(ing.ToString().Contains).gameObject.SetActive(true);
-
-        //foreach (AltarLayer layer in altar.transform.GetComponentsInChildren<AltarLayer>())
-        //{
-        //    if (layer.transform.name.Contains(ing.ToString()))
-        //    {
-        //        if (!layer.gameObject.activeSelf)
-        //        {
-        //            layer.gameObject.SetActive(true);
-        //            break;
-        //        }
-        //    }
-        //}
-
         for (int i = 0; i < altar.transform.childCount; i++)
         {
             if(altar.transform.GetChild(i).name.Contains(ing.ToString()))
@@ -160,17 +124,10 @@ public class GameManager : MonoBehaviour
                     break;
                 }
         }
-        //altar.transform.FindChild(ing.ToString()).GetComponent<AltarLayer>().Count++;
     }
 
     private void UpgradeAltar(Ingredient.type ing)
     {
-        //upgrade last ingredient
-
-        //string lastIngredient = currentIngredients[currentIngredients.Count - 2].ToString();
-        //altar.transform.FindChild(lastIngredient).GetComponent<AltarLayer>().Upgrade();
-
-
         for (int i = 0; i < altar.transform.childCount; i++)
         {
                 if (altar.transform.GetChild(i).gameObject.activeSelf)
