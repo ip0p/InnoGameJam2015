@@ -10,6 +10,8 @@
 
         private readonly Property<bool> isSelectedFulfilledProperty = new Property<bool>();
 
+        private readonly Property<bool> orderSelectedProperty = new Property<bool>();
+
         private readonly Property<Collection<OrderContext>> ordersProperty =
             new Property<Collection<OrderContext>>(new Collection<OrderContext>());
 
@@ -62,6 +64,18 @@
             set
             {
                 this.ordersProperty.Value = value;
+            }
+        }
+
+        public bool OrderSelected
+        {
+            get
+            {
+                return this.orderSelectedProperty.Value;
+            }
+            set
+            {
+                this.orderSelectedProperty.Value = value;
             }
         }
 

@@ -241,6 +241,12 @@
 
         private void OnOrderSelected(Order order)
         {
+            if (this.context != null)
+            {
+                this.context.OrderSelected = false;
+                this.context.OrderSelected = true;
+            }
+
             var handler = this.OrderSelected;
             if (handler != null)
             {
