@@ -126,6 +126,14 @@
                     this.OnOrderRemoved(order);
                 }
             }
+
+            if (this.context != null)
+            {
+                foreach (OrderContext orderContext in this.context.Orders)
+                {
+                    orderContext.RemainingDuration -= Time.deltaTime;
+                }
+            }
         }
 
         private void ClearSelectedOrder()
