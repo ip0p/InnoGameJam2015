@@ -11,15 +11,16 @@ public class GameManager : MonoBehaviour
     List<Ingredient.type> currentIngredients = new List<Ingredient.type>();
     float receiptChangeTime = 4f;
     private Receipt currentReceipt;
+    Text scoreText;
 
     public event Action<Receipt> RecipeFailed;
     public event Action<Receipt> RecipeComplete;
 
     Ingredient.type lastIngredientType;
-
     List<AltarLayer> altarLayers;
-
     Dictionary<Ingredient.type, int> ingredientCount;
+
+    int score;
 
     private void OnRecipeFailed(Receipt recipe)
     {
@@ -39,6 +40,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
     public Receipt CurrentReceipt
     {
         get
@@ -56,15 +59,18 @@ public class GameManager : MonoBehaviour
     {
 	    if (config == null)
 	    {
-        config = GameObject.Find("CONFIG").GetComponent<Config>();
+            config = GameObject.Find("CONFIG").GetComponent<Config>();
 	    }
 
+        
         GetComponent<KattaGod.Progression.VictoryBehaviour>().Defeat += GameManager_Defeat;
     }
 
     private void GameManager_Defeat()
     {
+        PlayerPrefs.SetInt("LastScore", score);
         Application.LoadLevel("GameOver");
+
     }
 
     public void AddIngredient(Ingredient.type ing)
@@ -93,6 +99,7 @@ public class GameManager : MonoBehaviour
                 print("Receipt complete!");
 
                 OnRecipeComplete(currentReceipt);
+                UpdateScore(CurrentReceipt);
                 // reset current ingredients and altar layers
                 ResetIngredients();
 
@@ -165,5 +172,16 @@ public class GameManager : MonoBehaviour
                 }
         }
         return true;
+    }
+
+    private void UpdateScore(Receipt recipe)
+    {
+        if (scoreText == null)
+            scoreText = GameObject.Find("Hud/Canvas/ScoreText").GetComponent<Text>();
+
+        score += 1;
+
+        scoreText.text = "Score: " + score;
+        
     }
 }
