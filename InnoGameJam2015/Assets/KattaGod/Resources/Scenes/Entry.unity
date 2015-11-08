@@ -359,7 +359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9c002d84e4fb34f8cdcd2add6b3811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RequiredBurnDuration: 2
+  RequiredBurnDuration: 1
 --- !u!114 &2044164458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,5 +371,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7897aea813647947ba1c3a564a04d4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RequiredDanceDuration: 2
-  RequiredPraiseDuration: 2
+  RequiredDanceDuration: 1
+  RequiredPraiseDuration: 1
