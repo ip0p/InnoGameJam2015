@@ -1,8 +1,13 @@
 ﻿namespace KattaGod.Progression
 {
+    using System;
+    using System.Linq;
+
     using KattaGod.Orders;
 
     using UnityEngine;
+
+    using Random = UnityEngine.Random;
 
     public class ProgressionBehaviour : MonoBehaviour
     {
@@ -11,9 +16,14 @@
         public Config Config;
 
         /// <summary>
-        ///   Delay between two orders (in s).
+        ///   Ratio of duration to grant the player.
         /// </summary>
-        public float DelayBetweenOrders = 10.0f;
+        public float DurationRatio = 1.0f;
+
+        /// <summary>
+        ///   Decrement of duration ratio per fulfilled order.
+        /// </summary>
+        public float DurationRatioDecrement = 0.01f;
 
         public GameManager GameManager;
 
@@ -24,17 +34,39 @@
         /// </summary>
         public float TimeTillNextOrder;
 
+        public float TimeTillNextOrderWhenEmpty = 0.5f;
+
+        private int numFulfilledOrders;
+
         #endregion
 
         #region Methods
+
+        protected void OnDisable()
+        {
+            if (this.Orders != null)
+            {
+                this.Orders.OrderFulfilled -= this.OnOrderFulfilled;
+                this.Orders.OrderRemoved -= this.OnOrderRemoved;
+            }
+        }
+
+        protected void OnEnable()
+        {
+            if (this.Orders != null)
+            {
+                this.Orders.OrderFulfilled += this.OnOrderFulfilled;
+                this.Orders.OrderRemoved += this.OnOrderRemoved;
+            }
+        }
 
         protected void Update()
         {
             this.TimeTillNextOrder -= Time.deltaTime;
             if (this.TimeTillNextOrder <= 0)
             {
-                this.CreateNewOrder();
-                this.TimeTillNextOrder = this.DelayBetweenOrders;
+                var duration = this.CreateNewOrder();
+                this.TimeTillNextOrder = duration * 0.9f;
             }
         }
 
@@ -50,20 +82,23 @@
                 Debug.LogWarning("No recipes set in config");
                 return null;
             }
-            return this.Config.receiptBook[Random.Range(0, this.Config.receiptBook.Count)];
+
+            // Order recipes by difficulty.
+            var maxDifficulty = Math.Min(this.Config.receiptBook.Count, this.numFulfilledOrders + 1);
+            return this.Config.receiptBook.OrderBy(recipe => recipe.Difficulty).ToList()[Random.Range(0, maxDifficulty)];
         }
 
-        private void CreateNewOrder()
+        private float CreateNewOrder()
         {
             if (this.GameManager == null)
             {
                 Debug.LogWarning("No game manager set");
-                return;
+                return 0;
             }
             if (this.Orders == null)
             {
                 Debug.LogWarning("No orders set");
-                return;
+                return 0;
             }
 
             // Get random recipe.
@@ -71,11 +106,29 @@
             if (recipe == null)
             {
                 Debug.LogWarning("Couldn't choose a recipe.");
-                return;
+                return 0;
             }
 
             // Add order.
-            this.Orders.AddOrder(recipe, recipe.BaseDuration);
+            var duration = recipe.BaseDuration * this.DurationRatio;
+            this.Orders.AddOrder(recipe, duration);
+
+            return duration;
+        }
+
+        private void OnOrderFulfilled(OrdersBehaviour.Order order)
+        {
+            ++this.numFulfilledOrders;
+            this.DurationRatio -= this.DurationRatioDecrement;
+        }
+
+        private void OnOrderRemoved(OrdersBehaviour.Order order)
+        {
+            // Check if orders left.
+            if (this.Orders.Orders.Count == 0)
+            {
+                this.TimeTillNextOrder = Math.Min(this.TimeTillNextOrder, this.TimeTillNextOrderWhenEmpty);
+            }
         }
 
         #endregion
