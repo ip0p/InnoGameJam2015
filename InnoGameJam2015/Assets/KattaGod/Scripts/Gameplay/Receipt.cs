@@ -25,6 +25,9 @@ public class Receipt
     public string ID;
 
     [SerializeField]
+    public string Name;
+
+    [SerializeField]
     private List<Ingredient> ingredients;
 
     [SerializeField]

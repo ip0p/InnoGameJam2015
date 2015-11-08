@@ -160,6 +160,49 @@
             }
         }
 
+        private string CreateIngredientText(Ingredient.type ingredientType, int ingredientAmount)
+        {
+            string stepText = ingredientType.ToString();
+            string stepTextPlural = ingredientType.ToString();
+            switch (ingredientType)
+            {
+                case Ingredient.type.Grub:
+                    stepText = "Sacrifice a grub";
+                    stepTextPlural = "Sacrifice {0} grubs";
+                    break;
+                case Ingredient.type.Corn:
+                    stepText = "Harvest corn";
+                    stepTextPlural = "Harvest {0} corns";
+                    break;
+                case Ingredient.type.Candle:
+                    stepText = "Put a candle on the altar";
+                    stepTextPlural = "Put {0} candles on the altar";
+                    break;
+                case Ingredient.type.Dance:
+                    stepText = "Dance for me! (Rub your hips)";
+                    stepTextPlural = "Dance {0} times for me! (Rub your hips)";
+                    break;
+                case Ingredient.type.Fire:
+                    stepText = "Roast the sacrifice! (Press & hold on fire)";
+                    stepTextPlural = "Roast the sacrifice {0} times! (Press & hold on fire)";
+                    break;
+                case Ingredient.type.Praise:
+                    stepText = "Praise my power! (Press & hold your belly)";
+                    stepTextPlural = "Praise my power {0} times! (Press & hold your belly)";
+                    break;
+            }
+
+            // Prepend amount if != 1
+            if (ingredientAmount > 1)
+            {
+                return string.Format(stepTextPlural, ingredientAmount, stepText);
+            }
+            else
+            {
+                return stepText;
+            }
+        }
+
         private InventoryContext CreateInventory()
         {
             var inventoryContext = new InventoryContext();
@@ -184,13 +227,49 @@
 
         private RecipeContext CreateRecipe(Receipt recipe)
         {
-            var recipeContext = new RecipeContext() { Id = recipe.ID, Title = recipe.ID };
-            foreach (var ingredient in recipe.Ingredients)
+            var recipeContext = new RecipeContext() { Id = recipe.ID, Title = recipe.Name };
+
+            // Group ingredients.
+            Ingredient.type currentIngredient = Ingredient.type.None;
+            int ingredientAmount = 0;
+            for (int index = 0; index < recipe.Ingredients.Count; index++)
             {
-                recipeContext.Steps.Add(
-                    new StepContext() { Type = ingredient.CurrentType, Text = ingredient.CurrentType.ToString() });
+                var ingredient = recipe.Ingredients[index];
+
+                if (ingredient.CurrentType == currentIngredient)
+                {
+                    ++ingredientAmount;
+                }
+                else
+                {
+                    if (currentIngredient != Ingredient.type.None)
+                    {
+                        // Add current ingredient.
+                        recipeContext.Steps.Add(this.CreateStepContext(currentIngredient, ingredientAmount));
+                    }
+
+                    // Start new step.
+                    currentIngredient = ingredient.CurrentType;
+                    ingredientAmount = 1;
+                }
             }
+
+            if (currentIngredient != Ingredient.type.None)
+            {
+                // Add last step.
+                recipeContext.Steps.Add(this.CreateStepContext(currentIngredient, ingredientAmount));
+            }
+
             return recipeContext;
+        }
+
+        private StepContext CreateStepContext(Ingredient.type currentIngredient, int ingredientAmount)
+        {
+            return new StepContext()
+            {
+                Type = currentIngredient,
+                Text = this.CreateIngredientText(currentIngredient, ingredientAmount)
+            };
         }
 
         private OrderContext GetOrderContext(OrdersBehaviour.Order order)
