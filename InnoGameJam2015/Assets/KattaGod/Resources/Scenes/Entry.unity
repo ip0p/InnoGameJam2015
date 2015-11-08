@@ -272,6 +272,29 @@ MonoBehaviour:
     ingredients:
     - currentType: 2
     - currentType: 5
+    - currentType: 4
+    - currentType: 4
+    - currentType: 3
+  - ID: popcorn
+    BaseDuration: 5
+    symbol: {fileID: 0}
+    ingredients:
+    - currentType: 1
+    - currentType: 5
+    - currentType: 3
+  - ID: simple_crab
+    BaseDuration: 5
+    symbol: {fileID: 0}
+    ingredients:
+    - currentType: 2
+    - currentType: 4
+    - currentType: 3
+  - ID: complete_crab
+    BaseDuration: 5
+    symbol: {fileID: 0}
+    ingredients:
+    - currentType: 2
+    - currentType: 5
     - currentType: 1
     - currentType: 1
     - currentType: 4
