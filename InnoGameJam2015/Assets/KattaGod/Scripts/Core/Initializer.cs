@@ -222,6 +222,11 @@
 
         private void OnDropItem(ItemContext item)
         {
+            if (item == null)
+            {
+                return;
+            }
+
             // Check if active recipe.
             if (this.GameManager.CurrentReceipt == null)
             {

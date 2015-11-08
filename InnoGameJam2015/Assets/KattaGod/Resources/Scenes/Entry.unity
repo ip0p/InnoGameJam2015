@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   receiptBook:
-  - BaseDuration: 30
+  - BaseDuration: 10
     Difficulty: 3
     ID: bloody_crab
     ingredients:
@@ -276,7 +276,7 @@ MonoBehaviour:
     - currentType: 4
     - currentType: 3
     symbol: {fileID: 0}
-  - BaseDuration: 20
+  - BaseDuration: 6
     Difficulty: 2
     ID: popcorn
     ingredients:
@@ -284,7 +284,7 @@ MonoBehaviour:
     - currentType: 5
     - currentType: 3
     symbol: {fileID: 0}
-  - BaseDuration: 20
+  - BaseDuration: 6
     Difficulty: 1
     ID: simple_crab
     ingredients:
@@ -292,7 +292,7 @@ MonoBehaviour:
     - currentType: 4
     - currentType: 3
     symbol: {fileID: 0}
-  - BaseDuration: 40
+  - BaseDuration: 15
     Difficulty: 4
     ID: complete_crab
     ingredients:
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Config: {fileID: 2044164453}
   DurationRatio: 1
-  DurationRatioDecrement: .0199999996
+  DurationRatioDecrement: .0399999991
   GameManager: {fileID: 2044164452}
   Orders: {fileID: 2044164451}
   TimeTillNextOrder: 0
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9c002d84e4fb34f8cdcd2add6b3811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RequiredBurnDuration: 1
+  RequiredBurnDuration: .5
 --- !u!114 &2044164458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,5 +371,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7897aea813647947ba1c3a564a04d4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RequiredDanceDuration: 1
-  RequiredPraiseDuration: 1
+  RequiredDanceDuration: .5
+  RequiredPraiseDuration: .5
