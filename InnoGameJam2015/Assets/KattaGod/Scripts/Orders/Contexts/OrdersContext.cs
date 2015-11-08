@@ -6,6 +6,10 @@
     {
         #region Fields
 
+        private readonly Property<bool> isSelectedFailedProperty = new Property<bool>();
+
+        private readonly Property<bool> isSelectedFulfilledProperty = new Property<bool>();
+
         private readonly Property<Collection<OrderContext>> ordersProperty =
             new Property<Collection<OrderContext>>(new Collection<OrderContext>());
 
@@ -24,6 +28,30 @@
         #endregion
 
         #region Properties
+
+        public bool IsSelectedFailed
+        {
+            get
+            {
+                return this.isSelectedFailedProperty.Value;
+            }
+            set
+            {
+                this.isSelectedFailedProperty.Value = value;
+            }
+        }
+
+        public bool IsSelectedFulfilled
+        {
+            get
+            {
+                return this.isSelectedFulfilledProperty.Value;
+            }
+            set
+            {
+                this.isSelectedFulfilledProperty.Value = value;
+            }
+        }
 
         public Collection<OrderContext> Orders
         {

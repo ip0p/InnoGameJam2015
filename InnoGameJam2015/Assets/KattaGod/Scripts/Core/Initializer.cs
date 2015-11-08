@@ -54,8 +54,11 @@
         public void Start()
         {
             // Register for game events.
+            var ordersContext = new OrdersContext();
             if (this.Orders != null)
             {
+                this.Orders.Init(ordersContext);
+
                 this.Orders.OrderAdded += this.OnOrderAdded;
                 this.Orders.OrderRemoved += this.OnOrderRemoved;
                 this.Orders.OrderSelected += this.OnOrderSelected;
@@ -89,7 +92,7 @@
             {
                 Inventory = this.CreateInventory(),
                 Cookbook = new CookbookContext(),
-                Orders = new OrdersContext()
+                Orders = ordersContext
             };
 
             this.recipes = new List<RecipeContext>();

@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using KattaGod.Orders.Contexts;
+
     using UnityEngine;
 
     public class OrdersBehaviour : MonoBehaviour
@@ -13,6 +15,8 @@
         public GameManager GameManager;
 
         public List<Order> Orders;
+
+        private OrdersContext context;
 
         private uint nextId = 1;
 
@@ -47,6 +51,11 @@
             var order = new Order() { Recipe = recipe, RemainingDuration = duration, Id = this.nextId++ };
             this.Orders.Add(order);
             this.OnOrderAdded(order);
+        }
+
+        public void Init(OrdersContext ordersContext)
+        {
+            this.context = ordersContext;
         }
 
         public void SelectOrder(uint orderId)
@@ -153,7 +162,7 @@
             {
                 return;
             }
-            
+
             this.OnOrderFulfilled(this.SelectedOrder);
 
             // Remove order.
@@ -183,6 +192,13 @@
 
         private void OnOrderFailed(Order order)
         {
+            // Trigger order failed.
+            if (this.context != null)
+            {
+                this.context.IsSelectedFailed = false;
+                this.context.IsSelectedFailed = true;
+            }
+
             var handler = this.OrderFailed;
             if (handler != null)
             {
@@ -192,6 +208,13 @@
 
         private void OnOrderFulfilled(Order order)
         {
+            // Trigger order fulfilled.
+            if (this.context != null)
+            {
+                this.context.IsSelectedFulfilled = false;
+                this.context.IsSelectedFulfilled = true;
+            }
+
             var handler = this.OrderFulfilled;
             if (handler != null)
             {
