@@ -16,6 +16,8 @@
 
         private readonly Property<FireContext> fireProperty = new Property<FireContext>();
 
+        private readonly Property<bool> itemDroppedProperty = new Property<bool>();
+
         private readonly Property<MamaContext> mamaProperty = new Property<MamaContext>();
 
         private readonly Property<OrdersContext> ordersProperty = new Property<OrdersContext>();
@@ -41,6 +43,18 @@
             set
             {
                 this.fireProperty.Value = value;
+            }
+        }
+
+        public bool ItemDropped
+        {
+            get
+            {
+                return this.itemDroppedProperty.Value;
+            }
+            set
+            {
+                this.itemDroppedProperty.Value = value;
             }
         }
 

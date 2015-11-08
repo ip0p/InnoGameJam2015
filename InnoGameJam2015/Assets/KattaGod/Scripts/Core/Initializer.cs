@@ -47,6 +47,8 @@
 
         private List<RecipeContext> recipes;
 
+        private WorldContext worldContext;
+
         #endregion
 
         #region Public Methods and Operators
@@ -108,15 +110,15 @@
             this.gameContext.Orders.SelectOrder += this.OnSelectOrder;
 
             // Load world.
-            var worldContext = new WorldContext
+            this.worldContext = new WorldContext
             {
                 Orders = this.gameContext.Orders,
                 Victory = victoryContext,
                 Fire = fireContext,
                 Mama = mamaContext
             };
-            worldContext.DropItem += this.OnDropItem;
-            this.AddScene(this.WorldScene, worldContext);
+            this.worldContext.DropItem += this.OnDropItem;
+            this.AddScene(this.WorldScene, this.worldContext);
 
             // Load hud.
             this.AddScene(
@@ -313,7 +315,13 @@
                 return;
             }
 
-            this.GameManager.AddIngredient(item.IngredientType);
+            var result = this.GameManager.AddIngredient(item.IngredientType);
+            if (result)
+            {
+                // Trigger event in world context.
+                this.worldContext.ItemDropped = false;
+                this.worldContext.ItemDropped = true;
+            }
         }
 
         private void OnOrderAdded(OrdersBehaviour.Order order)

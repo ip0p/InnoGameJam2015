@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void AddIngredient(Ingredient.type ing)
+    public bool AddIngredient(Ingredient.type ing)
     {
         currentIngredients.Add(ing);
 
@@ -105,6 +105,8 @@ public class GameManager : MonoBehaviour
 
                 // get random new receipt
             }
+
+            return true;
         }
         else
         {
@@ -112,6 +114,8 @@ public class GameManager : MonoBehaviour
             ResetIngredients();
             OnRecipeFailed(currentReceipt);
             // fail
+
+            return false;
         }
     }
 
