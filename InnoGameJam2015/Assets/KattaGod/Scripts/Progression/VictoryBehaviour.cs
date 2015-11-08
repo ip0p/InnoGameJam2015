@@ -80,6 +80,12 @@
 
         private void DecreaseSatisfaction()
         {
+            if (this.VictoryContext != null)
+            {
+                this.VictoryContext.OrderFailed = false;
+                this.VictoryContext.OrderFailed = true;
+            }
+
             // Check if loosing game.
             if (this.Satisfaction == Satisfaction.VeryAngry)
             {
@@ -107,12 +113,6 @@
 
         private void OnOrderFailed(OrdersBehaviour.Order order)
         {
-            if (this.VictoryContext != null)
-            {
-                this.VictoryContext.OrderFailed = false;
-                this.VictoryContext.OrderFailed = true;
-            }
-
             this.DecreaseSatisfaction();
         }
 
