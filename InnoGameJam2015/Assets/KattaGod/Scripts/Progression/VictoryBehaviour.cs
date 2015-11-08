@@ -107,11 +107,23 @@
 
         private void OnOrderFailed(OrdersBehaviour.Order order)
         {
+            if (this.VictoryContext != null)
+            {
+                this.VictoryContext.OrderFailed = false;
+                this.VictoryContext.OrderFailed = true;
+            }
+
             this.DecreaseSatisfaction();
         }
 
         private void OnOrderFulfilled(OrdersBehaviour.Order order)
         {
+            if (this.VictoryContext != null)
+            {
+                this.VictoryContext.OrderFulfilled = false;
+                this.VictoryContext.OrderFulfilled = true;
+            }
+
             // Check if already super happy.
             if (this.Satisfaction == Satisfaction.VeryHappy)
             {
