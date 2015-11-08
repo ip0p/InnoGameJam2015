@@ -252,7 +252,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   altar: {fileID: 0}
-  receiptText: {fileID: 0}
   config: {fileID: 2044164453}
 --- !u!114 &2044164453
 MonoBehaviour:
@@ -322,7 +321,7 @@ MonoBehaviour:
   DurationRatioDecrement: .0399999991
   GameManager: {fileID: 2044164452}
   Orders: {fileID: 2044164451}
-  TimeTillNextOrder: 0
+  TimeTillNextOrder: 5
   TimeTillNextOrderWhenEmpty: .5
 --- !u!4 &2044164455
 Transform:
