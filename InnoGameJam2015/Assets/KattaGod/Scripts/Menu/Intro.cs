@@ -22,6 +22,12 @@ public class Intro : MonoBehaviour {
         {
             StartCoroutine(FadeOut());
         }
+
+        // Quit on escape.
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 	
     IEnumerator FadeIn()
